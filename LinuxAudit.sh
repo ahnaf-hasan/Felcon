@@ -15,6 +15,7 @@ function ctrl_c() {
 
 
 
+
 echo "_    _                 _          _ _ _   "
 echo "| |  (_)_ _ _  ___ __  /_\ _  _ __| (_) |_ "
 echo "| |__| |   \ || \ \ / / _ \ || / _  | |  _|"
@@ -24,7 +25,7 @@ echo
 echo "Welcome to security audit of Linux machine:"
 
 echo
-echo "The Script will automatically gather the required info:"
+echo "The Script will automatically gather the required info from system:"
 echo "The checklist can help you in the process of hardening your system:"
 echo "Note: it has been tested for various Linux Distro:"
 echo
@@ -33,22 +34,22 @@ echo
 
 # Prompt
 while true; do
-    read -p "Would you like to save the output? [Y/N] " output
-    case "${output^^}" in
-        Y)
-            read -p "Please enter the path to save the output (e.g., /path_to_save/LinuxAudit.txt): " path
-            echo 
-            echo "File will be saved to $path/LinuxAudit.txt"
-            break
-            ;;
-        N)
-            echo "OK, not saving moving on."
-            break
-            ;;
-        *)
-            echo "Invalid input. Please enter Y or N."
-            ;;
-    esac
+    read -p "Would you like to save the output? [Y/N] " output
+    case "${output^^}" in
+        Y)
+            read -p "Please enter the path to save the output (e.g., /path_to_save/LinuxAudit.txt): " path
+            echo 
+            echo "File will be saved to $path/LinuxAudit.txt"
+            break
+            ;;
+        N)
+            echo "OK, not saving moving on."
+            break
+            ;;
+        *)
+            echo "Invalid input. Please enter Y or N."
+            ;;
+    esac
 done
 
 echo
@@ -59,204 +60,220 @@ echo
 echo "Script Starts ;)"
 START=$(date +%s)
 echo
+
 # Function to perform audit and write to file
 perform_audit() {
-    Linux_System_Information_checks(){
-        printf "\n\e[0;33m[+] Linux Kernel Information\e[0m\n"
-        uname -a
+    echo
+    echo -e "\e[0;33m 1. Linux Kernel Information////// \e[0m"
+    echo
+    uname -a
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 2. Current User and ID information////// \e[0m"
+    echo
+    whoami
+    echo
+    id
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 3.  Linux Distribution Information///// \e[0m"
+    echo
+    lsb_release -a
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 4. List Current Logged In Users///// \e[0m"
+    echo
+    w
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 5. $HOSTNAME Uptime Information///// \e[0m"
+    echo
+    uptime
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 6. Running Services///// \e[0m"
+    echo
+    service --status-all |grep "+"
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 7. Active Internet Connections and Open Ports///// \e[0m"
+    echo
+    netstat -natp
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 8. Check Available Space///// \e[0m"
+    echo
+    df -h
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 9. Check Memory///// \e[0m"
+    echo
+    free -h
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 10. History (Commands)///// \e[0m"
+    echo
+    history
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 11. Network Interfaces///// \e[0m"
+    echo
+    ifconfig -a
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 12. IPtable Information///// \e[0m"
+    echo
+    iptables -L -n -v
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 13. Check Running Processes///// \e[0m"
+    echo
+    ps -a
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 14. Check SSH Configuration///// \e[0m"
+    echo
+    cat /etc/ssh/sshd_config
+    echo
+    echo "###############################################"
+    echo -e "\e[0;33m 15. List All Packages Installed///// \e[0m"
+    apt-cache pkgnames
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 16. Network Parameters///// \e[0m"
+    echo
+    cat /etc/sysctl.conf
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 17. Password Policies///// \e[0m"
+    echo
+    cat /etc/pam.d/common-password
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 18. Check your Source List File///// \e[0m"
+    echo
+    cat /etc/apt/sources.list
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 19. Check for Broken Dependencies///// \e[0m"
+    echo
+    apt-get check
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 20. MOTD Banner Message///// \e[0m"
+    echo
+    cat /etc/motd
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 21. List User Names///// \e[0m"
+    echo
+    cut -d: -f1 /etc/passwd
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 22. Check for Null Passwords///// \e[0m"
+    echo
+    users="$(cut -d: -f 1 /etc/passwd)"
+    for x in $users
+    do
+    passwd -S $x |grep "NP"
+    done
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 23. IP Routing Table///// \e[0m"
+    echo
+    route
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 24. Kernel Messages///// \e[0m"
+    echo
+    dmesg
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 25. Check Upgradable Packages///// \e[0m"
+    echo
+    apt list --upgradeable
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 26. CPU/System Information///// \e[0m"
+    echo
+    cat /proc/cpuinfo
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 27. TCP wrappers///// \e[0m"
+    echo
+    cat /etc/hosts.allow
+    echo "///////////////////////////////////////"
+    echo
+    cat /etc/hosts.deny
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 28. Failed login attempts///// \e[0m"
+    echo
+    grep --color "failure" /var/log/auth.log
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 29. Cron jobs///// \e[0m"
+    echo
+    echo "Crontab User"
+    echo
+    crontab -l
+    echo
+    echo "Crontab System wide"
+    ls -la /etc/cron*
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 30. Shells used by users///// \e[0m"
+    echo
+    awk -F: '{print $1, $7}' /etc/passwd
+    echo
+    echo "###############################################"
+    echo
+    echo -e "\e[0;33m 31. Services run by Root///// \e[0m"
+    echo
+    ps -U root -u root u
+    echo
+    echo "###############################################"
 
-
-        printf "\n\e[0;33m[+] Linux Distribution Information\e[0m\n"
-        lsb_release -a
-
-
-        printf "\n\e[0;33m[+] $HOSTNAME Uptime Information"
-        uptime
-
-
-        printf "\n\e[0;33m[+] Check Available Space\e[0m\n"
-        df -h
-        
-
-        printf "\n\e[0;33m[+] Check Memory\e[0m\n"
-        free -h
-        
-
-        printf "\n\e[0;33m[+] History (Commands)\e[0m\n"
-        history | tail -n 100
-        
-
-        printf "\n\e[0;33m[+] List All Packages Installed\e[0m\n"
-        echo "Check your directory for the file: LinuxAudit_Check15_Packages_Installed.txt"
-        apt-cache pkgnames >> "LinuxAudit_Check15_Packages_Installed.txt"
-        
-
-        
-        printf "\n\e[0;33m[+] Check your Source List File\e[0m\n"
-        cat /etc/apt/sources.list
-        
-
-        printf "\n\e[0;33m[+] Check for Broken Dependencies\e[0m\n"
-        apt-get check
-        
-
-        printf "\n\e[0;33m[+] MOTD Banner Message\e[0m\n"
-        cat /etc/motd
-
-
-        printf "\n\e[0;33m[+] Kernel Messages\e[0m\n"
-        dmesg | tail -n 50
-
-
-        printf "\n\e[0;33m[+] Check Upgradable Packages\e[0m\n"
-        apt list --upgradeable
-
-
-        printf "\n\e[0;33m[+] CPU/System Information\e[0m\n"
-        cat /proc/cpuinfo
-
-
-        printf "\n\e[0;33m[+] TCP wrappers\e[0m\n"
-        cat /etc/hosts.allow
-        cat /etc/hosts.deny
-        
-
-        printf "\n\e[0;33m[+] Cron jobs\e[0m\n"
-        printf "\n\e[0;33m[+] Crontab User\e[0m\n"
-        crontab -l
-        
-
-        printf "\n\e[0;33m[+] Crontab System wide\e[0m\n"
-        ls -la /etc/cron*
-        
-
-        printf "\n\e[0;33m[+] Last reboots\e[0m\n"
-        last reboot | head
-         
-
-    }
-
-    Users_and_Groups_Checks(){
-        printf "\n\e[0;33m[+] Current User and ID information\e[0m\n"
-        whoami
-        id
-        
-
-        printf "\n\e[0;33m[+] List Current Logged In Users\e[0m\n"
-        w
-
-
-        printf "\n\e[0;33m[+] List User Names\e[0m\n"
-        cut -d: -f1 /etc/passwd
-        
-
-        printf "\n\e[0;33m[+] Shells used by users\e[0m\n"
-        awk -F: '{print $1, $7}' /etc/passwd
-        
-
-        printf "\n\e[0;33m[+] Services run by Root\e[0m\n"
-        ps -U root -u root u
-           
-    }
-
-    Networking_Checks(){
-        printf "\n\e[0;33m[+] Active Internet Connections and Open Ports\e[0m\n"
-        ss -tulnp
-        
-
-        printf "\n\e[0;33m[+] Network Interfaces\e[0m\n"
-        ifconfig -a
-
-
-        printf "\n\e[0;33m[+] IPtable Information\e[0m\n"
-        iptables -L -n -v
-
-
-        printf "\n\e[0;33m[+] Network Parameters\e[0m\n"
-        cat /etc/sysctl.conf
-        
-
-        printf "\n\e[0;33m[+] IP Routing Table\e[0m\n"
-        route
-        
-
-        printf "\n\e[0;33m[+] ARP table\e[0m\n"
-        ip neigh show       
-    }
-
-    Services_Checks(){
-        printf "\n\e[0;33m[+] Running Services\e[0m\n"
-        service --status-all |grep "+"
-        
-
-        printf "\n\e[0;33m[+] Check Running Processes\e[0m\n"
-        ps -a
-
-    }
-
-    Security_checks(){
-        printf "\n\e[0;33m[+] Check SSH Configuration\e[0m\n"
-        cat /etc/ssh/sshd_config
-
-
-        printf "\n\e[0;33m[+] Password Policies\e[0m\n"
-        cat /etc/pam.d/common-password
-
-
-        printf "\n\e[0;33m[+] Check for Null Passwords\e[0m\n"
-        users="$(cut -d: -f 1 /etc/passwd)"
-        for x in $users
-        do
-        passwd -S $x |grep "NP"
-        done
-         
-
-        printf "\n\e[0;33m[+] Failed login attempts\e[0m\n"
-        grep --color "failure" /var/log/auth.log
-        
-
-        printf "\n\e[0;33m[+] UID 0 users other than root\e[0m\n"
-        awk -F: '($3 == 0 && $1 != "root"){print}' /etc/passwd
-        
-
-        printf "\n\e[0;33m[+] Password aging\e[0m\n"
-        awk -F: '{ print $1 }' /etc/passwd | xargs -n1 chage -l 2>/dev/null
-
-
-        printf "\n\e[0;33m[+] World writable files\e[0m\n"
-        find / -xdev -type f -perm -0002 2>/dev/null
-
-
-        printf "\n\e[0;33m[+] SUID/SGID binaries\e[0m\n"
-        find / -xdev \( -perm -4000 -o -perm -2000 \) -type f 2>/dev/null
-
-
-        printf "\n\e[0;33m[+] Sysctl security params\e[0m\n"
-        sysctl kernel.randomize_va_space
-        sysctl net.ipv4.conf.all.accept_redirects
-        sysctl net.ipv4.conf.all.rp_filter
-
-
-        printf "\n\e[0;33m[+] Dangerous dotfiles\e[0m\n"
-        find /home /root -maxdepth 2 \( -name .rhosts -o -name .netrc -o -name .forward \) 2>/dev/null
-
-    }
-
-Linux_System_Information_checks
-Users_and_Groups_Checks
-Networking_Checks
-Services_Checks
-Security_checks
-        
 }
 
-if [[ "${output^^}" == "Y" ]]; then
-    perform_audit > "$path/LinuxAudit.txt"
-else
-    perform_audit
-fi
-echo
 
+if [[ -d "$path" ]]; then
+    perform_audit > "$path/LinuxAudit.txt"
+else
+    perform_audit > "$path"
+fi
+
+
+echo
+echo "###############################################"
 echo
 END=$(date +%s)
 DIFF=$(( END - START ))
@@ -265,4 +282,5 @@ echo
 echo "Executed on:"
 date
 echo
+
 exit 0
