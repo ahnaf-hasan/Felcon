@@ -1,5 +1,5 @@
 #!/bin/bash
-#Felcon 
+#Felcon Team
 # Clear the screen
 tput clear
 
