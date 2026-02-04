@@ -135,6 +135,8 @@ Linux Security Audit Script একটি Bash স্ক্রিপ্ট, য�
 
 git clone 
 
+Then, 
+
 Step 1: Give Execute Permission
 chmod +x LinuxAudit.sh
 
