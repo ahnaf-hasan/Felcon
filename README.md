@@ -137,6 +137,8 @@ git clone
 
 Then, 
 
+cd Felcon
+
 Step 1: Give Execute Permission
 chmod +x LinuxAudit.sh
 
