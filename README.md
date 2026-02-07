@@ -129,7 +129,7 @@ Linux Security Audit Script একটি Bash স্ক্রিপ্ট, য�
 
 
 
-▶️ Usage
+## ▶️ Usage 
 
 *First of all 
 
@@ -147,7 +147,7 @@ Step 2: Run the Script
 
 
 
-🧪 Testing
+## 🧪 Testing
 
 ✅ Tested on Debian OS
 
@@ -155,7 +155,7 @@ Step 2: Run the Script
 
 
 
-📌 Notes
+## 📌 Notes
 
 Run as root for complete and accurate security checks
 
@@ -163,6 +163,6 @@ Designed for educational, auditing, and hardening purposes only
 
 
 
-📜 License
+## 📜 License
 
 This project is open-source. You are free to modify and use it for learning and security auditing.
